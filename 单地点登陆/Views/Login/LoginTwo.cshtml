@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <title>LoginTwo</title>
+</head>
+<body>
+    <div> 
+        恭喜你登录成功
+        <form method="get" action="/Login/FillWrite" enctype="multipart/form-data">
+            <input type="submit" value="导入"/>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        //定时检测是否被强制下线
+        setInterval(function () {
+            CheckIsForcedLogout();
+        }, 5000);
+    });
+        //检测是否被强制下线
+    function CheckIsForcedLogout() {
+        $.ajax({
+            url: "/Login/CheckIsForcedLogout",
+            type: "POST",
+            dataType: "text",
+            success: function (msg) {
+                if (msg != "Failed") {
+                    alert(msg);
+                }
+                
+                //if (msg.OperateResult == "Success") {
+                //    $.messager.alert('', msg.OperateData, 'error', function () {
+                //        alert("该跳转页面了");
+                //    });
+                //}
+            },
+            error: function (ex) { }
+        });
+    }
+</script>
